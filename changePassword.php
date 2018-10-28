@@ -50,7 +50,7 @@ if(isset($_POST['old_password']) and isset($_POST['new_password'])){
    $user = $_SESSION["username"];
    echo $user;
    $query_password_user =<<<EOF
-   UPDATE Users SET hashedPassword = $newpassword WHERE username like '$user' ;
+   UPDATE Users SET hashedPassword = '$newpassword' WHERE username like '$user' ;
 EOF;
 
    $query_verify_login = <<<EOF
