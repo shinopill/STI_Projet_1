@@ -8,9 +8,7 @@
    <body>
    <?php
   
-   if (isset($_POST['firstname']) AND isset($_POST['lastname']) AND isset($_POST['email']) AND isset($_POST['password'])) {
-    echo 'firstname: '     . strip_tags($_POST['firstname']) . '<br/>';
-    echo 'lastname: '      . strip_tags($_POST['lastname'])  . '<br/>';
+   if (isset($_POST['email']) AND isset($_POST['password'])) {
     echo 'email address: ' . strip_tags($_POST['email'])     . '<br/>';
     echo 'password: '      . strip_tags($_POST['password']) . '<br/>';
    }
@@ -25,24 +23,24 @@
 
   class MyDB extends SQLite3 {
     function __construct() {
-      $this->open('database.sqlite');
+      $this->open('./database.sqlite');
     }
   }
   $db = new MyDB();
-  if(!$db) {
+  /*if(!$db) {
      echo $db->lastErrorMsg();
   } else {
      echo "Opened database successfully\n" . '</br>';
-  }
+  }*/
 
-  $username = strip_tags($_POST['firstname']);
-  $password = strip_tags($_POST['password']);
-  
-  $query_select_username_password = <<<EOF
-  SELECT username, hashedPassword FROM Users WHERE username like $username;
+  $username = strip_tags($_POST['email']);
+  $password = strip_tags($_POST['password']); 
+
+  $query_verify_login = <<<EOF
+  SELECT hashedPassword FROM Users WHERE username like '$username';
 EOF;
 
-$ret = $db->query($query_select_username_password)
+  $ret = $db->query($query_verify_login);
 
   /*$query_insert_user =<<<EOF
    INSERT INTO Users (username, passwrd) VALUES ($username, $password);
@@ -74,12 +72,15 @@ EOF;
   $ret =  $db->query($query_email_user);
 */
 
-  while($data = $ret->fetchArray(SQLITE3_ASSOC)){
-    echo 'FROM : ' . $data['expediteur'] . '</br>';
-    echo 'TO :' . $data['destinataire'] . '</br>';
-    echo 'Message :' . $data['message'] . '</br>'; 
+  $data = $ret->fetchArray(SQLITE3_ASSOC);
+
+  if($password === $data['hashedPassword'] ) {
+    echo '<br/> YES';
   }
-  
+  else {
+    header("Location: login.php");
+  }
+
   ?>
    </body>
 </html>
