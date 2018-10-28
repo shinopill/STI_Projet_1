@@ -39,7 +39,9 @@
    $db->busyTimeout(100);
 
    $username = $_SESSION['username'];
+   $emailsID = array();
 
+   
    //// SQLite queries ////
    $query_email_user =<<<EOF
    SELECT rowid, * FROM  Messages WHERE emailTo like '$username' LIMIT '$startFrom', '$emailsPerPage';
@@ -50,8 +52,6 @@ EOF;
 EOF;
   /////////////////////////
    $ret = $db->query($query_email_user);
-
-   $emailsID = array();
 
    while($data = $ret->fetchArray(SQLITE3_ASSOC)){
     $id = $data['rowid'];
@@ -68,6 +68,7 @@ EOF;
     echo '</br></br>';
   } 
   
+
   // Pagination (10 emails per page)
   $totalRows = $db->query($query_count_rows);
   $totalRows = $totalRows->fetchArray(SQLITE3_ASSOC);
@@ -79,22 +80,24 @@ EOF;
   }
   echo $pageLink . "</div>";
 
-  // handle buttons
-  for($i = 0; $i < count($emailsID); $i++) {
-    $emailID = $emailsID[$i];
-    if(isset($_POST["read$emailID"])) { // handle 'read'
-      
-    }
-    else if(isset($_POST["answer$emailID"])) { // handle 'answer'
-      header("Location: sendEmail.php");
-    }
-    else if(isset($_POST["delete$emailID"])) { // handle 'delete'
-      $query_delete_email =<<<EOF
-      DELETE FROM Messages WHERE rowid = $emailID;
-EOF;
-      $db->exec($query_delete_email);
-    }
+ // handle buttons
+ for($i = 0; $i < count($emailsID); $i++) {
+  $emailID = $emailsID[$i];
+  if(isset($_POST["read$emailID"])) { // handle 'read'
+    
   }
+  else if(isset($_POST["answer$emailID"])) { // handle 'answer'
+    header("Location: sendEmail.php");
+  }
+  else if(isset($_POST["delete$emailID"])) { // handle 'delete'
+    $query_delete_email =<<<EOF
+    DELETE FROM Messages WHERE rowid = $emailID;
+EOF;
+   $db->exec($query_delete_email);
+   echo "<meta http-equiv='refresh' content='0'>"; // refresh the page
+  }
+}
+
   $db->close();
 ?>
   
