@@ -48,7 +48,11 @@ EOF;
     echo 'FROM : ' . $data['emailFrom'] . '</br>';
     echo 'TO : ' . $data['emailTo'] . '</br>';
     echo 'Timestamp : ' . $data['timeDate'] . '</br>';
-    echo 'Subject : ' . $data['subject'] . '</br></br>'; 
+    echo 'Subject : ' . $data['subject'] . '</br>';
+    echo "<input type='button' name='read" .$id. "' value='Read'/>"; 
+    echo "<input type='button' name='answer" .$id. "' value='Answer'/>"; 
+    echo "<input type='button' name='delete" .$id. "' value='Delete'/>";
+    echo '</br></br>';
   } 
   
   // Pagination (10 emails per page)
@@ -61,7 +65,7 @@ EOF;
   $totalPages = ceil($totalRows / $emailsPerPage);
   $pageLink = "<div class='pagination'>";
   for($i = 1; $i <= $totalPages; $i++) {
-    $pageLink .= "<a href='seeEmail.php?page=" . $i . "'> " . $i . " </a>";
+    $pageLink .= "<a href='seeEmail.php?page=" . $i . "'>" . $i . "</a> ";
   }
   echo $pageLink . "</div>";
  
