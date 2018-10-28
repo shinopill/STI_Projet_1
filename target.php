@@ -1,7 +1,3 @@
-<?php
-    session_start();
-?>
-
 <!DOCTYPE html>
 
 <html>
@@ -10,7 +6,6 @@
        <meta charset="utf-8" />
    </head>
    <body>
-
    <?php
   
    if (isset($_POST['firstname']) AND isset($_POST['lastname']) AND isset($_POST['email']) AND isset($_POST['password1'])) {
@@ -37,11 +32,7 @@
   if(!$db) {
      echo $db->lastErrorMsg();
   } else {
-<<<<<<< HEAD
      echo "Opened database successfully\n" . '</br>';
-=======
-     echo "Opened database successfully\n";
->>>>>>> b4a1ba38e448fabc06f44cc25efdba59785fb2b5
   }
 
   $username = $_POST['firstname'];
@@ -63,18 +54,6 @@ EOF;
   $db->exec($query_insert_user);
   $db->exec($query_insert_email);
   $ret =  $db->query($query_email_user);
-  
-$query_email_username =<<<EOF
-SELECT * FROM  Messages WHERE destinataire like $username ;
-EOF;
-
-$query_insert_email =<<<EOF
-INSERT INTO Messages (expediteur, destinataire,message) VALUES ('toto', $username,'HELLLLOOOOOO');
-EOF;
-
-  $db->exec($query);
-  $db->exec($query3);
-  $ret =  $db->query($query2);
 
   while($data = $ret->fetchArray(SQLITE3_ASSOC)){
     echo 'FROM : ' . $data['expediteur'] . '</br>';
@@ -83,6 +62,5 @@ EOF;
   }
   
   ?>
->>>>>>> b4a1ba38e448fabc06f44cc25efdba59785fb2b5
    </body>
 </html>
