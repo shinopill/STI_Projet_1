@@ -6,16 +6,16 @@
        <meta charset="utf-8" />
    </head>
    <body>
-		<p>
+		<h1>
 			Create an account<br />
-		</p>
+		</h1>
 		
-		<form action="target.php" method="post">
-				Firstname<input type="text" name="firstname"/>            <br/>
-                Lastname<input type="text" name="lastname"/>              <br/>
-                Email Address<input type="text" name="email"/>            <br/>
-                Password<input type="password" name="password1"/>         <br/>
-                Confirm Password<input type="password" name="password2"/> <br/>
+		<form action="login.php" method="post">
+				Firstname <input type="text" name="firstname"/>            <br/>
+                Lastname <input type="text" name="lastname"/>              <br/>
+                Email Address <input type="text" name="email"/>            <br/>
+                Password <input type="password" name="password1"/>         <br/>
+                Confirm Password <input type="password" name="password2"/> <br/>
                 <input type="submit" value="Register"/>
 		</form>
    </body>

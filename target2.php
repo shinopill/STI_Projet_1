@@ -10,7 +10,31 @@
        <meta charset="utf-8" />
    </head>
    <body>
+<<<<<<< HEAD
+<?php
 
+if (!empty($_POST)) {
+    if (isset($_POST['email'])) {
+        if($_POST['password'] == "toto") {
+            $_SESSION['email'] = strip_tags($_POST['email']);
+        }
+    }
+}
+
+if(isset($_SESSION['email']) AND $_POST['password'] == "toto") {
+    echo 'Welcome !</br>';
+    echo 'email address: ' . $_SESSION['email'] . '<br/>';
+}
+
+else {
+    header("Location: http://localhost/sti_projet_1/registration.php");
+}
+
+?>
+   
+   <a href="logout.php">Logout</a>
+    
+=======
    <?php
   
    if (isset($_POST['firstname']) AND isset($_POST['lastname']) AND isset($_POST['email']) AND isset($_POST['password1'])) {
@@ -37,11 +61,7 @@
   if(!$db) {
      echo $db->lastErrorMsg();
   } else {
-<<<<<<< HEAD
-     echo "Opened database successfully\n" . '</br>';
-=======
      echo "Opened database successfully\n";
->>>>>>> b4a1ba38e448fabc06f44cc25efdba59785fb2b5
   }
 
   $username = $_POST['firstname'];
@@ -52,18 +72,6 @@
 EOF;
 
 
-  $query_email_user =<<<EOF
-  SELECT * FROM  Messages WHERE destinataire like $username ;
-EOF;
-
-  $query_insert_email =<<<EOF
-  INSERT INTO Messages (expediteur, destinataire,message) VALUES ('toto', $username,'HELLLLOOOOOO');
-EOF;
-
-  $db->exec($query_insert_user);
-  $db->exec($query_insert_email);
-  $ret =  $db->query($query_email_user);
-  
 $query_email_username =<<<EOF
 SELECT * FROM  Messages WHERE destinataire like $username ;
 EOF;
@@ -83,6 +91,6 @@ EOF;
   }
   
   ?>
->>>>>>> b4a1ba38e448fabc06f44cc25efdba59785fb2b5
+>>>>>>> 04628d6909e62cda14bf06c31e09888d62ad86aa
    </body>
 </html>
