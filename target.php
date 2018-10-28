@@ -1,7 +1,3 @@
-<?php
-    session_start();
-?>
-
 <!DOCTYPE html>
 
 <html>
@@ -10,7 +6,6 @@
        <meta charset="utf-8" />
    </head>
    <body>
-
    <?php
   
    if (isset($_POST['firstname']) AND isset($_POST['lastname']) AND isset($_POST['email']) AND isset($_POST['password'])) {
@@ -37,7 +32,7 @@
   if(!$db) {
      echo $db->lastErrorMsg();
   } else {
-     echo "Opened database successfully\n";
+     echo "Opened database successfully\n" . '</br>';
   }
 
   $username = strip_tags($_POST['firstname']);
@@ -53,6 +48,7 @@ $ret = $db->query($query_select_username_password)
    INSERT INTO Users (username, passwrd) VALUES ($username, $password);
 EOF;*/
 
+
 /*$query_email_username =<<<EOF
 SELECT * FROM  Messages WHERE destinataire like $username ;
 EOF;*/
@@ -63,6 +59,19 @@ EOF;*/
 /*
   $db->exec($query);
   $ret =  $db->query($query2);
+*/
+/*
+  $query_email_user =<<<EOF
+  SELECT * FROM  Messages WHERE destinataire like $username ;
+EOF;
+
+  $query_insert_email =<<<EOF
+  INSERT INTO Messages (expediteur, destinataire,message) VALUES ('toto', $username,'HELLLLOOOOOO');
+EOF;
+
+  $db->exec($query_insert_user);
+  $db->exec($query_insert_email);
+  $ret =  $db->query($query_email_user);
 */
 
   while($data = $ret->fetchArray(SQLITE3_ASSOC)){
