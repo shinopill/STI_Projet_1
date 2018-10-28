@@ -1,24 +1,9 @@
-<!DOCTYPE html>
+ <?php
 
-<html>
-   <head>
-       <title>Target</title>
-       <meta charset="utf-8" />
-   </head>
-   <body>
-   <?php
-  
-   if (isset($_POST['email']) AND isset($_POST['password'])) {
-    echo 'email address: ' . strip_tags($_POST['email'])     . '<br/>';
-    echo 'password: '      . strip_tags($_POST['password']) . '<br/>';
-   }
-   else {
-        echo 'Fields not filled';
-   }
-   ?>
+  if (!isset($_POST['email']) OR !isset($_POST['password'])) {
+    header("Location: login.php");
+  }
 
-   
-   <?php
   //https://stackoverflow.com/questions/16728265/how-do-i-connect-to-an-sqlite-database-with-php
 
   class MyDB extends SQLite3 {
@@ -81,6 +66,5 @@ EOF;
     header("Location: login.php");
   }
 
-  ?>
-   </body>
-</html>
+?>
+ 
