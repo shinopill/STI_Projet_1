@@ -1,11 +1,12 @@
  <?php
   session_start();
- 
+
+
   if(!isset($_SESSION["username"])){
      if ((!isset($_POST['username']) OR !isset($_POST['password']))) {
      header("Location: login.php");
     }
-  }
+  
 
   //https://stackoverflow.com/questions/16728265/how-do-i-connect-to-an-sqlite-database-with-php
 
@@ -15,19 +16,14 @@
     }
   }
   $db = new MyDB();
-  /*if(!$db) {
-     echo $db->lastErrorMsg();
-  } else {
-     echo "Opened database successfully\n" . '</br>';
-  }*/
 
   $username = strip_tags($_POST['username']);
   $password = strip_tags($_POST['password']); 
 
   $query_verify_login = <<<EOF
-  SELECT hashedPassword FROM Users WHERE username like '$username';
+  SELECT hashedPassword,active,permissionLevel FROM Users WHERE username like '$username';
 EOF;
-  
+ 
   $ret = $db->query($query_verify_login);
 
   /*$query_insert_user =<<<EOF
@@ -65,10 +61,20 @@ EOF;
   if($password === $data['hashedPassword'] ) {
     /*session is started if you don't write this line can't use $_Session  global variable*/
     $_SESSION["username"]=$username;
+    $_SESSION["level"]=$data["permissionLevel"];
+    $_SESSION["active"]=$data["active"];
+    if( $_SESSION["level"]){
+      header("Location: target2.php");
+    }
+    if($_SESSION["level"]  === 0){
+       header("Location: login.php");
+    }
   }
   else {
     header("Location: login.php");
   }
+}
+
 
 ?>
  <html>

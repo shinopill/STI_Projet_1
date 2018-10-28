@@ -1,3 +1,12 @@
+<?php
+session_start();
+if(!isset($_SESSION['username']) or $_SESSION("active") === 0) {
+  header("Location: login.php");
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,13 +26,11 @@
        <input type="submit" value="Register"/>
 	</form>
   
+  <form action="target.php" method="post">
+                <input type="submit" name ="getBack" value="Back to menu"/>
+		</form>
 
-  <?php
-
-  session_start();
-  if(!isset($_SESSION['username'])) {
-    header("Location: login.php");
-  }
+ <?php
 
   if(isset($_POST['to']) and isset($_POST['object']) and isset($_POST["email_text"])) {
 
