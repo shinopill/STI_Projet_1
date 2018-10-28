@@ -4,6 +4,8 @@ session_start();
    header("Location: login.php");
   }
 ?>
+
+
 <!DOCTYPE html>
 <html>
    <head>
@@ -12,16 +14,17 @@ session_start();
    </head>
    <body>
 		<h1>
-			Create an account<br />
+			Update an account<br />
 		</h1>
-		<form action="registration.php" method="post">
+		
+		<form action="updateUser.php" method="post">
 				Firstname <input type="text" name="reg_firstname"/><br/>
         Password <input type="text" name="reg_pass"/><br/>
         isActive <input type="radio" name="isActive"value="0">Non actif
                  <input type="radio" name="isActive"value="1">actif       <br/>
-       isAdmin <input type="radio" name="isAdmin"value="0"> Non admin
-                 <input type="radio" name="isAdmin"value="1">admin       <br/>
-        <input type="submit" value="Register"/>
+  isAdmin <input type="radio" name="isAdmin"value="0"> Non admin
+    <input type="radio" name="isAdmin"value="1">admin       <br/>
+        <input type="submit" value="Update"/>
 		</form>
     <form action="target2.php" method="post">
                 <input type="submit" name ="getBack" value="Back to menu"/>
@@ -41,26 +44,30 @@ session_start();
   $active = $_POST['isActive'];
   $admin = $_POST["isAdmin"];
 
+  echo $active;
+  echo $admin;
    $db = new MyDB();
    if(!$db) {
       echo $db->lastErrorMsg();
    } else {
+      echo "Opened database successfully\n" . '</br>';
    }
 
    if(($active == "1" or $active == "0") && ( $admin == "1" or  $admin == "0")){
-   $query_insert_user =<<<EOF
-   INSERT INTO Users (username,hashedPassword,active,permissionLevel) VALUES ('$username','$pass','$active','$admin');
+   $query_update_user =<<<EOF
+   UPDATE Users SET hashedPassword='$pass', active='$active', permissionLevel='$admin' WHERE username like '$username';
 EOF;
 
-  try{
-   $db->exec($query_insert_user);
-    echo "User created ";
-  }catch(Exception $e){
-    echo "wrong input";
+    try{
+     $db->exec($query_update_user);
+    }catch(Exception $e){
+      echo "Wrong input";
+    }
+
+   }else{
+    echo "Wrong input ";
+   }
   }
-  
-  }
-}
     ?>
    </body>
 </html>

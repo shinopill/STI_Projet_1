@@ -1,3 +1,12 @@
+<?php
+  session_start();
+  if(!isset($_SESSION['username'])) {
+    header("Location: login.php");
+  }
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,16 +16,11 @@
   <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
   <script src="main.js"></script>
 </head>
+
+
+
 <body>
 
-<?php
-  session_start();
-  if(!isset($_SESSION['username'])) {
-    header("Location: login.php");
-  }
-  $_SESSION['username']=$_SESSION['username'];
-
-?>
 
   	<form action="changePassword.php" method="post">
                 Old Password <input type="password" name="old_password"/><br/>
@@ -25,7 +29,7 @@
 		</form>
 
     	<form action="target.php" method="post">
-                <input type="submit" value="Back to menu"/>
+                <input type="submit" name ="getBack" value="Back to menu"/>
 		</form>
 
 <?php
