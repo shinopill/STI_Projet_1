@@ -1,5 +1,8 @@
-<!DOCTYPE html>
+<?php
+session_start();
+?>
 
+<!DOCTYPE html>
 <html>
    <head>
        <title>Login</title>
@@ -15,5 +18,12 @@
                 Password <input type="password" name="password"/> <br/>
                 <input type="submit" value="Login"/>
 		</form>
+    <?php
+    if(isset($_SESSION["username"]) and $_SESSION["active"] === 0) {
+      echo "Votre compte est désactivée. Quitter le site SVP";
+    }
+  ?>
+
+
    </body>
 </html>

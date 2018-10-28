@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['username']) or $_SESSION("active") === 0) {
+if(!isset($_SESSION['username']) or $_SESSION["active"] === 0) {
   header("Location: login.php");
 }
 ?>
@@ -17,19 +17,29 @@ if(!isset($_SESSION['username']) or $_SESSION("active") === 0) {
   <script src="main.js"></script>
 </head>
 <body>
-
-	<form action ="sendEmail.php" method="post">
-				To <input type="text" name="to"/>            <br/>
-        Subject <input type="text" name="object"/>     <br/>
+<form action ="sendEmail.php" method="post">
+        To <input type="text" name="to" value=<?php
+        if(isset($_SESSION["emailTo"])){
+          echo $_SESSION["emailTo"];
+        }else{
+          echo "";
+        }
+        ?>  />            <br/>
+        Subject <input type="text" name="object"/ value=<?php
+        if(isset($_SESSION["subject"])){
+          echo $_SESSION["subject"];
+        }else{
+          echo "";
+        }
+        ?>>     <br/>
          <textarea type="text" name="email_text"></textarea>
          <br/>
        <input type="submit" value="Register"/>
 	</form>
-  
+
   <form action="target.php" method="post">
                 <input type="submit" name ="getBack" value="Back to menu"/>
 		</form>
-
  <?php
 
   if(isset($_POST['to']) and isset($_POST['object']) and isset($_POST["email_text"])) {
@@ -54,7 +64,7 @@ if(!isset($_SESSION['username']) or $_SESSION("active") === 0) {
    }
 
    $query_insert_email =<<<EOF
-   INSERT INTO Messages (sender,recipient,subject,message,timeDate) VALUES ('$to','$username','$object','$email_text','$now');
+   INSERT INTO Messages (emailFrom,emailTo,subject,message,timeDate) VALUES ('$username','$to','$object','$email_text','$now');
 EOF;
 
 

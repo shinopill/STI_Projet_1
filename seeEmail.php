@@ -83,9 +83,19 @@ EOF;
   for($i = 0; $i < count($emailsID); $i++) {
     $emailID = $emailsID[$i];
     if(isset($_POST["read$emailID"])) { // handle 'read'
-      
+     
     }
     else if(isset($_POST["answer$emailID"])) { // handle 'answer'
+      $query_from_email =<<<EOF
+      SELECT emailTo,subject FROM Messages  WHERE rowid = $emailID;
+EOF;
+      $ret = $db->query($query_from_email);
+
+      $data = $ret->fetchArray(SQLITE3_ASSOC);
+
+      $_SESSION["emailTo"] = $data["emailTo"];
+      $_SESSION["subject"] = $data["subject"];
+      
       header("Location: sendEmail.php");
     }
     else if(isset($_POST["delete$emailID"])) { // handle 'delete'
