@@ -36,6 +36,7 @@
   }
 
    $db = new MyDB();
+   $db->busyTimeout(100);
 
    $username = $_SESSION['username'];
 
@@ -82,10 +83,10 @@ EOF;
   for($i = 0; $i < count($emailsID); $i++) {
     $emailID = $emailsID[$i];
     if(isset($_POST["read$emailsID[$i]"])) { // handle 'read'
-
+      
     }
     else if(isset($_POST["answer$emailsID[$i]"])) { // handle 'answer'
-      
+      header("Location: sendEmail.php");
     }
     else if(isset($_POST["delete$emailsID[$i]"])) { // handle 'delete'
       $query_delete_email =<<<EOF
