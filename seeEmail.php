@@ -82,15 +82,15 @@ EOF;
   // handle buttons
   for($i = 0; $i < count($emailsID); $i++) {
     $emailID = $emailsID[$i];
-    if(isset($_POST["read$emailsID[$i]"])) { // handle 'read'
+    if(isset($_POST["read$emailID"])) { // handle 'read'
       
     }
-    else if(isset($_POST["answer$emailsID[$i]"])) { // handle 'answer'
+    else if(isset($_POST["answer$emailID"])) { // handle 'answer'
       header("Location: sendEmail.php");
     }
-    else if(isset($_POST["delete$emailsID[$i]"])) { // handle 'delete'
+    else if(isset($_POST["delete$emailID"])) { // handle 'delete'
       $query_delete_email =<<<EOF
-      DELETE FROM Messages WHERE rowid = $emailsID[$i];
+      DELETE FROM Messages WHERE rowid = $emailID;
 EOF;
       $db->exec($query_delete_email);
     }
