@@ -10,7 +10,7 @@
 			Login<br />
 		</h1>
 		
-		<form action="target.php" method="post">
+		<form action="verifyLogin.php" method="post">
                 Email Address <input type="text" name="email"/>    <br/>
                 Password <input type="password" name="password"/> <br/>
                 <input type="submit" value="Login"/>

@@ -13,11 +13,11 @@
 
    <?php
   
-   if (isset($_POST['firstname']) AND isset($_POST['lastname']) AND isset($_POST['email']) AND isset($_POST['password1'])) {
+   if (isset($_POST['firstname']) AND isset($_POST['lastname']) AND isset($_POST['email']) AND isset($_POST['password'])) {
     echo 'firstname: '     . strip_tags($_POST['firstname']) . '<br/>';
     echo 'lastname: '      . strip_tags($_POST['lastname'])  . '<br/>';
     echo 'email address: ' . strip_tags($_POST['email'])     . '<br/>';
-    echo 'password: ' . strip_tags($_POST['password1'])     . '<br/>';
+    echo 'password: '      . strip_tags($_POST['password']) . '<br/>';
    }
    else {
         echo 'Fields not filled';
@@ -40,25 +40,30 @@
      echo "Opened database successfully\n";
   }
 
-  $username = $_POST['firstname'];
-  $password = $_POST['password1'];
+  $username = strip_tags($_POST['firstname']);
+  $password = strip_tags($_POST['password']);
   
-   $query_insert_user =<<<EOF
+  $query_select_username_password = <<<EOF
+  SELECT username, hashedPassword FROM Users WHERE username like $username;
+EOF;
+
+$ret = $db->query($query_select_username_password)
+
+  /*$query_insert_user =<<<EOF
    INSERT INTO Users (username, passwrd) VALUES ($username, $password);
-EOF;
+EOF;*/
 
-
-$query_email_username =<<<EOF
+/*$query_email_username =<<<EOF
 SELECT * FROM  Messages WHERE destinataire like $username ;
-EOF;
+EOF;*/
 
-$query_insert_email =<<<EOF
+/*$query_insert_email =<<<EOF
 INSERT INTO Messages (expediteur, destinataire,message) VALUES ('toto', $username,'HELLLLOOOOOO');
-EOF;
-
+EOF;*/
+/*
   $db->exec($query);
-  $db->exec($query3);
   $ret =  $db->query($query2);
+*/
 
   while($data = $ret->fetchArray(SQLITE3_ASSOC)){
     echo 'FROM : ' . $data['expediteur'] . '</br>';
@@ -67,6 +72,5 @@ EOF;
   }
   
   ?>
->>>>>>> 04628d6909e62cda14bf06c31e09888d62ad86aa
    </body>
 </html>
