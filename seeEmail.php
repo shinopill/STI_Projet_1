@@ -18,6 +18,17 @@
 
 <?php
 
+  $emailsPerPage = 5;
+
+  if(isset($_GET['page'])) {
+    $page = $_GET['page'];
+  }
+  else {
+    $page = 1;
+  }
+
+  $startFrom = ($page-1) * $emailsPerPage;
+
   class MyDB extends SQLite3 {
     function __construct() {
       $this->open('./database.sqlite');
@@ -25,23 +36,39 @@
   }
 
    $db = new MyDB();
-   if(!$db) {
-      echo $db->lastErrorMsg();
-   } else {
-      echo "Opened database successfully\n" . '</br>';
-   }
+   $username = $_SESSION['username'];
    $query_email_user =<<<EOF
-   SELECT * FROM  Messages WHERE destinataire like $username ;
+   SELECT rowid, * FROM  Messages WHERE emailTo like '$username' LIMIT '$startFrom', '$emailsPerPage';
 EOF;
 
-   
    $ret = $db->query($query_email_user);
+  
    while($data = $ret->fetchArray(SQLITE3_ASSOC)){
-    echo 'FROM : ' . $data['expediteur'] . '</br>';
-    echo 'TO :' . $data['destinataire'] . '</br>';
-    echo 'Message :' . $data['message'] . '</br>'; 
+    $id = $data['rowid'];
+    echo 'FROM : ' . $data['emailFrom'] . '</br>';
+    echo 'TO : ' . $data['emailTo'] . '</br>';
+    echo 'Timestamp : ' . $data['timeDate'] . '</br>';
+    echo 'Subject : ' . $data['subject'] . '</br>';
+    echo "<input type='button' name='read" .$id. "' value='Read'/>"; 
+    echo "<input type='button' name='answer" .$id. "' value='Answer'/>"; 
+    echo "<input type='button' name='delete" .$id. "' value='Delete'/>";
+    echo '</br></br>';
   } 
-
+  
+  // Pagination (10 emails per page)
+  $query_count_rows =<<<EOF
+  SELECT COUNT(*) as count FROM Messages WHERE emailTo like '$username';
+EOF;
+  $totalRows = $db->query($query_count_rows);
+  $totalRows = $totalRows->fetchArray(SQLITE3_ASSOC);
+  $totalRows = $totalRows['count'];
+  $totalPages = ceil($totalRows / $emailsPerPage);
+  $pageLink = "<div class='pagination'>";
+  for($i = 1; $i <= $totalPages; $i++) {
+    $pageLink .= "<a href='seeEmail.php?page=" . $i . "'>" . $i . "</a> ";
+  }
+  echo $pageLink . "</div>";
+ 
 ?>
   
 </body>
