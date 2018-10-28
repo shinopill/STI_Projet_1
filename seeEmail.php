@@ -44,11 +44,11 @@
    
    //// SQLite queries ////
    $query_email_user =<<<EOF
-   SELECT rowid, * FROM  Messages WHERE emailTo like '$username' LIMIT '$startFrom', '$emailsPerPage';
+   SELECT rowid, * FROM  Messages WHERE emailTo LIKE '$username' ORDER BY timeDate DESC LIMIT '$startFrom', '$emailsPerPage';
 EOF;
 
   $query_count_rows =<<<EOF
-  SELECT COUNT(*) as count FROM Messages WHERE emailTo like '$username';
+  SELECT COUNT(*) as count FROM Messages WHERE emailTo LIKE '$username';
 EOF;
   /////////////////////////
    $ret = $db->query($query_email_user);
@@ -83,23 +83,38 @@ EOF;
   // handle buttons
   for($i = 0; $i < count($emailsID); $i++) {
     $emailID = $emailsID[$i];
-    if(isset($_POST["read$emailID"])) { // handle 'read'
-     
+
+    /* handle 'read' */
+    if(isset($_POST["read$emailID"])) { 
+      $query_select_email_by_id =<<<EOF
+      SELECT * FROM Messages WHERE rowid = $emailID;
+EOF;
+      $ret = $db->query($query_select_email_by_id);
+      $data = $ret->fetchArray(SQLITE3_ASSOC);
+
+      $_SESSION['readEmailFrom'] = $data['emailFrom'];
+      $_SESSION['readEmailTo'] = $data['emailTo'];
+      $_SESSION['readEmailSubject'] = $data['subject'];
+      $_SESSION['readEmailMessage'] = $data['message'];
+      $_SESSION['readEmailTime'] = $data['timeDate'];
+      header("Location: readEmail.php");
     }
-    else if(isset($_POST["answer$emailID"])) { // handle 'answer'
+
+    /* handle 'answer' */
+    else if(isset($_POST["answer$emailID"])) { 
       $query_from_email =<<<EOF
       SELECT emailTo, subject FROM Messages WHERE rowid = $emailID;
 EOF;
       $ret = $db->query($query_from_email);
-
       $data = $ret->fetchArray(SQLITE3_ASSOC);
 
       $_SESSION["emailTo"] = $data["emailTo"];
-      $_SESSION["subject"] = "RE:".$data["subject"];
-      
+      $_SESSION["subject"] = "RE:".$data["subject"];     
       header("Location: sendEmail.php");
     }
-    else if(isset($_POST["delete$emailID"])) { // handle 'delete'
+
+    /* handle 'delete' */
+    else if(isset($_POST["delete$emailID"])) {
       $query_delete_email =<<<EOF
       DELETE FROM Messages WHERE rowid = $emailID;
 EOF;
@@ -110,6 +125,8 @@ EOF;
 
   $db->close();
 ?>
-  
+  <form action="target.php" method="post">
+        <input type="submit" name ="getBack" value="Back to menu"/>
+	</form>
 </body>
 </html>

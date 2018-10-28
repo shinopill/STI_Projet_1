@@ -1,11 +1,9 @@
 <?php
-session_start();
-if(!isset($_SESSION['username']) or $_SESSION["active"] === 0) {
-  header("Location: login.php");
-}
+  session_start();
+  if(!isset($_SESSION['username']) or $_SESSION["active"] === 0) {
+    header("Location: login.php");
+  }
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -34,7 +32,7 @@ if(!isset($_SESSION['username']) or $_SESSION["active"] === 0) {
         ?>>     <br/>
          <textarea type="text" name="email_text"></textarea>
          <br/>
-       <input type="submit" value="Register"/>
+       <input type="submit" value="Send"/>
 	</form>
 
   <form action="target.php" method="post">
@@ -57,11 +55,6 @@ if(!isset($_SESSION['username']) or $_SESSION["active"] === 0) {
   $now = date('Y-m-d H:i:s');
 
    $db = new MyDB();
-   if(!$db) {
-      echo $db->lastErrorMsg();
-   } else {
-      echo "Opened database successfully\n" . '</br>';
-   }
 
    $query_insert_email =<<<EOF
    INSERT INTO Messages (emailFrom,emailTo,subject,message,timeDate) VALUES ('$username','$to','$object','$email_text','$now');
@@ -69,7 +62,7 @@ EOF;
 
 
   $db->exec($query_insert_email);
-   echo "Email send ";
+   echo "Email successfully sent.";
   }
   ?>
 </body>
