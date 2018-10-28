@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8" />
@@ -8,14 +8,28 @@
   <script src="main.js"></script>
 </head>
 <body>
+
 <?php
+  session_start();
+  if(!isset($_SESSION['username'])) {
+    header("Location: login.php");
+  }
+?>
+
+<?php
+
+  class MyDB extends SQLite3 {
+    function __construct() {
+      $this->open('./database.sqlite');
+    }
+  }
+
    $db = new MyDB();
    if(!$db) {
       echo $db->lastErrorMsg();
    } else {
       echo "Opened database successfully\n" . '</br>';
    }
-  
    $query_email_user =<<<EOF
    SELECT * FROM  Messages WHERE destinataire like $username ;
 EOF;
@@ -26,10 +40,9 @@ EOF;
     echo 'FROM : ' . $data['expediteur'] . '</br>';
     echo 'TO :' . $data['destinataire'] . '</br>';
     echo 'Message :' . $data['message'] . '</br>'; 
-  }
-  
+  } 
 
-<?>
+?>
   
 </body>
 </html>
