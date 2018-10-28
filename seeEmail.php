@@ -42,16 +42,21 @@
 EOF;
 
    $ret = $db->query($query_email_user);
-  
+
+   $emailsID = array();
+
    while($data = $ret->fetchArray(SQLITE3_ASSOC)){
     $id = $data['rowid'];
+    array_push($emailsID, $id);
     echo 'FROM : ' . $data['emailFrom'] . '</br>';
     echo 'TO : ' . $data['emailTo'] . '</br>';
     echo 'Timestamp : ' . $data['timeDate'] . '</br>';
     echo 'Subject : ' . $data['subject'] . '</br>';
-    echo "<input type='button' name='read" .$id. "' value='Read'/>"; 
-    echo "<input type='button' name='answer" .$id. "' value='Answer'/>"; 
-    echo "<input type='button' name='delete" .$id. "' value='Delete'/>";
+    echo "<form method='POST' action=''>";
+    echo "<input type='submit' name='read" .$id. "' value='Read'/>"; 
+    echo "<input type='submit' name='answer" .$id. "' value='Answer'/>"; 
+    echo "<input type='submit' name='delete" .$id. "' value='Delete'/>";
+    echo "</form>";
     echo '</br></br>';
   } 
   
@@ -69,6 +74,10 @@ EOF;
   }
   echo $pageLink . "</div>";
  
+
+  // handle buttons
+  if(isset($_POST[]))
+
 ?>
   
 </body>
