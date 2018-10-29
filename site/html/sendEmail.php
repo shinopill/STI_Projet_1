@@ -19,13 +19,15 @@
         To <input type="text" name="to" value=<?php
         if(isset($_SESSION["emailTo"])){
           echo $_SESSION["emailTo"];
+          unset($_SESSION["emailTo"]);
         }else{
           echo "";
         }
-        ?>  />            <br/>
-        Subject <input type="text" name="object"/ value=<?php
+        ?> >            <br/>
+        Subject <input type="text" name="object" value=<?php
         if(isset($_SESSION["subject"])){
           echo $_SESSION["subject"];
+          unset($_SESSION["subject"]);
         }else{
           echo "";
         }

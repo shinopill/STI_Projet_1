@@ -33,7 +33,7 @@ EOF;
 
   $data = $ret->fetchArray(SQLITE3_ASSOC);
 
-  if($password === $data['hashedPassword'] ) {
+  if($password === $data['hashedPassword']) {
     /*session is started if you don't write this line can't use $_Session  global variable*/
     $_SESSION["username"]=$username;
     $_SESSION["level"]=$data["permissionLevel"];
@@ -41,9 +41,11 @@ EOF;
     if( $_SESSION["level"] == 1){
       header("Location: target2.php");
     }
-    if($_SESSION["active"]  == 0){
-       header("Location: login.php");
+    if($_SESSION["active"]  == 0 ){
+       header("Location: index.php");
     }
+  }else{
+    header("Location: index.php");
   }
 }
 ?>
