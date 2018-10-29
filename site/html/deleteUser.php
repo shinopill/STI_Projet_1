@@ -31,7 +31,7 @@ session_start();
 
   class MyDB extends SQLite3 {
     function __construct() {
-      $this->open('./database.sqlite');
+      $this->open('../databases/database.sqlite');
     }
   }
   

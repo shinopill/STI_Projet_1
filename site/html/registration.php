@@ -31,7 +31,7 @@ session_start();
   if(isset($_POST['reg_firstname']) and isset($_POST['reg_pass']) and isset($_POST["isActive"]) and isset($_POST["isAdmin"])) {
   class MyDB extends SQLite3 {
     function __construct() {
-      $this->open('./database.sqlite');
+      $this->open('../databases/database.sqlite');
     }
   }
   
