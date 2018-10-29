@@ -1,7 +1,7 @@
 <?php
 session_start();
   if(!isset($_SESSION['username']) or $_SESSION["active"] == 0 or $_SESSION["level"] == 0) {
-   header("Location: login.php");
+   header("Location: index.php");
   }
 ?>
 <!DOCTYPE html>
@@ -29,7 +29,6 @@ session_start();
 
     <?php
   if(isset($_POST['reg_firstname']) and isset($_POST['reg_pass']) and isset($_POST["isActive"]) and isset($_POST["isAdmin"])) {
-
   class MyDB extends SQLite3 {
     function __construct() {
       $this->open('./database.sqlite');
@@ -40,18 +39,15 @@ session_start();
   $pass = $_POST['reg_pass'];
   $active = $_POST['isActive'];
   $admin = $_POST["isAdmin"];
-
    $db = new MyDB();
    if(!$db) {
       echo $db->lastErrorMsg();
    } else {
    }
-
    if(($active == "1" or $active == "0") && ( $admin == "1" or  $admin == "0")){
    $query_insert_user =<<<EOF
    INSERT INTO Users (username,hashedPassword,active,permissionLevel) VALUES ('$username','$pass','$active','$admin');
 EOF;
-
   try{
    $db->exec($query_insert_user);
     echo "User created ";

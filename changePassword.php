@@ -1,11 +1,9 @@
 <?php
   session_start();
   if(!isset($_SESSION['username']) or $_SESSION["active"] === 0) {
-    header("Location: login.php");
+    header("Location: index.php");
   }
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -17,24 +15,17 @@
   <script src="main.js"></script>
 </head>
 
-
-
 <body>
-
-
   	<form action="changePassword.php" method="post">
                 Old Password <input type="password" name="old_password"/><br/>
                 New Password <input type="password" name="new_password"/> <br/>
                 <input type="submit" value="Change password"/>
 		</form>
 
-    	<form action="target.php" method="post">
+    <form action="target.php" method="post">
                 <input type="submit" name ="getBack" value="Back to menu"/>
 		</form>
-
 <?php
-
-
 
 if(isset($_POST['old_password']) and isset($_POST['new_password'])){
 
@@ -54,28 +45,25 @@ if(isset($_POST['old_password']) and isset($_POST['new_password'])){
    $user = $_SESSION["username"];
    echo $user;
    $query_password_user =<<<EOF
-   UPDATE Users SET hashedPassword = '$newpassword' WHERE username like '$user' ;
+   UPDATE Users SET hashedPassword = '$newpassword' WHERE username LIKE '$user' ;
 EOF;
 
    $query_verify_login = <<<EOF
   SELECT hashedPassword FROM Users WHERE username LIKE '$user';
 EOF;
   
-$ret = $db->query($query_verify_login);
+  $ret = $db->query($query_verify_login);
 
-
-
-$data = $ret->fetchArray(SQLITE3_ASSOC);
-echo  $data['hashedPassword'];
-if($_POST["old_password"] === $data['hashedPassword'] ) {
-  /*session is started if you don't write this line can't use $_Session  global variable*/
-  $db->exec($query_password_user);
-  echo "Password changed";
-} else {
-  echo "Wrong inputs ";
+  $data = $ret->fetchArray(SQLITE3_ASSOC);
+  echo  $data['hashedPassword'];
+  if($_POST["old_password"] === $data['hashedPassword'] ) {
+    /* session is started if you don't write this line can't use $_Session  global variable */
+    $db->exec($query_password_user);
+    echo "Password changed";
+  } else {
+    echo "Wrong inputs ";
+  }
 }
-}
-
 ?>
 
 </body>

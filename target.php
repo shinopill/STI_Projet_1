@@ -8,7 +8,7 @@
 
   if(!isset($_SESSION["username"]) or $_SESSION["active"] == 0){
      if ((!isset($_POST['username']) OR !isset($_POST['password']))) {
-      header("Location: login.php");
+      header("Location: index.php");
     }
     
    

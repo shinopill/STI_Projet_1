@@ -3,7 +3,7 @@
     if(!isset($_SESSION['username']) or $_SESSION["active"] === 0 and !isset($_SESSION['readEmailFrom']) and
        !isset($_SESSION['readEmailTo']) and !isset($_SESSION['readEmailSubject']) and !isset($_SESSION['readEmailMessage']) and
        !isset($_SESSION['readEmailTime'])) {
-        header("Location: login.php");
+        header("Location: index.php");
     }
 ?>
 

@@ -20,7 +20,7 @@ session_start();
 		</form>
     <?php
     if(isset($_SESSION["username"]) and $_SESSION["active"] === 0) {
-      echo "Votre compte est désactivée. Quitter le site SVP";
+      echo "Votre compte est désactivé. Quittez le site SVP";
     }
   ?>
 
