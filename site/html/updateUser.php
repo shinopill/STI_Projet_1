@@ -20,10 +20,10 @@ session_start();
 		<form action="updateUser.php" method="post">
 				Firstname <input type="text" name="reg_firstname"/><br/>
         Password <input type="text" name="reg_pass"/><br/>
-        isActive <input type="radio" name="isActive"value="0">Non actif
-                 <input type="radio" name="isActive"value="1">actif       <br/>
-  isAdmin <input type="radio" name="isAdmin"value="0"> Non admin
-    <input type="radio" name="isAdmin"value="1">admin       <br/>
+        isActive <input type="radio" name="isActive"value="0">No
+                 <input type="radio" name="isActive"value="1">Yes       <br/>
+  isAdmin <input type="radio" name="isAdmin"value="0">No
+    <input type="radio" name="isAdmin"value="1">Yes       <br/>
         <input type="submit" value="Update"/>
 		</form>
     <form action="target2.php" method="post">

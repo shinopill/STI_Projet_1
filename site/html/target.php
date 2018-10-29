@@ -58,14 +58,16 @@ EOF;
 		</h1>
 		
 		<form action="seeEmail.php" method="post">
-                <input type="submit" value="see your emails"/>
-     </form>
+      <input type="submit" value="see your emails"/>
+    </form>
 		<form action="sendEmail.php" method="post">
-                <input type="submit" value="Write emails"/>
-   </form>
+      <input type="submit" value="Write emails"/>
+    </form>
 		<form action="changePassword.php" method="post">
-                <input type="submit" value="Change your password"/>
-     </form>
-		
+      <input type="submit" value="Change your password"/>
+    </form>
+    <form action="logout.php" method="post">
+      <input type="submit" value="Logout"/>
+    </form>
    </body>
 </html>

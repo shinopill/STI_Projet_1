@@ -15,27 +15,25 @@ session_start();
 		</h1>
 		
 		<form action="seeEmail.php" method="post">
-                <input type="submit" value="see your mails"/>
-     </form>
+      <input type="submit" value="see your mails"/>
+    </form>
 		<form action="sendEmail.php" method="post">
-                <input type="submit" value="Write mails"/>
-   </form>
+      <input type="submit" value="Write mails"/>
+    </form>
 		<form action="changePassword.php" method="post">
-                <input type="submit" value="Change your password"/>
-     </form>
-
-     <form action="deleteUser.php" method="post">
-                
-                <input type="submit" value="Delete user"/>
-     </form>
-
-     <form action="updateUser.php" method="post">
-                <input type="submit" value="Update user info"/>
-     </form>
-
-     <form action="registration.php" method="post">
-                <input type="submit" value="Add a new user"/>
-     </form>
-		
-   </body>
+      <input type="submit" value="Change your password"/>
+    </form>
+    <form action="deleteUser.php" method="post">              
+      <input type="submit" value="Delete user"/>
+    </form>
+    <form action="updateUser.php" method="post">
+      <input type="submit" value="Update user info"/>
+    </form>
+    <form action="registration.php" method="post">
+      <input type="submit" value="Add a new user"/>
+    </form>
+    <form action="logout.php" method="post">
+      <input type="submit" value="Logout"/>
+    </form>
+  </body>
 </html>
