@@ -23,8 +23,8 @@
   $db = new MyDB();
 
   $username = strip_tags($_POST['username']);
-  $password = strip_tags($_POST['password']); 
-
+  $password = hash('sha256', strip_tags($_POST['password'])); 
+  
   $query_verify_login = <<<EOF
   SELECT hashedPassword,active,permissionLevel FROM Users WHERE username like '$username';
 EOF;
@@ -34,14 +34,14 @@ EOF;
   $data = $ret->fetchArray(SQLITE3_ASSOC);
 
   if($password === $data['hashedPassword']) {
-    /*session is started if you don't write this line can't use $_Session  global variable*/
+    /*Session is started if you don't write this line can't use $_Session  global variable */
     $_SESSION["username"]=$username;
     $_SESSION["level"]=$data["permissionLevel"];
     $_SESSION["active"]=$data["active"];
-    if( $_SESSION["level"] == 1){
+    if( $_SESSION["level"] == 1) {
       header("Location: target2.php");
     }
-    if($_SESSION["active"]  == 0 ){
+    if($_SESSION["active"]  == 0 ) {
        header("Location: index.php");
     }
   }else{

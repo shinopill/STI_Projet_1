@@ -37,10 +37,6 @@ session_start();
   
   $username=$_POST["del_firstname"];
    $db = new MyDB();
-   if(!$db) {
-      echo $db->lastErrorMsg();
-   } else {
-   }
 
    $query_del_user =<<<EOF
    DELETE FROM Users WHERE username like '$username';

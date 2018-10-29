@@ -36,7 +36,7 @@ session_start();
   }
   
   $username=$_POST["reg_firstname"];
-  $pass = $_POST['reg_pass'];
+  $pass = hash('sha256', strip_tags($_POST['reg_pass']));
   $active = $_POST['isActive'];
   $admin = $_POST["isAdmin"];
    $db = new MyDB();

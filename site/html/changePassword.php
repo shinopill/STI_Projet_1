@@ -36,16 +36,12 @@ if(isset($_POST['old_password']) and isset($_POST['new_password'])){
   }
 
    $db = new MyDB();
-   if(!$db) {
-      echo $db->lastErrorMsg();
-   } else {
-      echo "Opened database successfully\n" . '</br>';
-   }
-   $newpassword = $_POST["new_password"];
+
+   $newpassword = hash('sha256', strip_tags($_POST["new_password"]));
    $user = $_SESSION["username"];
-   echo $user;
+
    $query_password_user =<<<EOF
-   UPDATE Users SET hashedPassword = '$newpassword' WHERE username LIKE '$user' ;
+   UPDATE Users SET hashedPassword = '$newpassword' WHERE username LIKE '$user';
 EOF;
 
    $query_verify_login = <<<EOF
@@ -55,13 +51,13 @@ EOF;
   $ret = $db->query($query_verify_login);
 
   $data = $ret->fetchArray(SQLITE3_ASSOC);
-  echo  $data['hashedPassword'];
-  if($_POST["old_password"] === $data['hashedPassword'] ) {
+
+  if(hash('sha256', strip_tags($_POST["old_password"])) === $data['hashedPassword'] ) {
     /* session is started if you don't write this line can't use $_Session  global variable */
     $db->exec($query_password_user);
     echo "Password changed";
   } else {
-    echo "Wrong inputs ";
+    echo "Wrong inputs";
   }
 }
 ?>
